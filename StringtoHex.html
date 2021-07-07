@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<strong><h2>HEX encription</h2></strong>
+	<form name="myForm">
+		<input type="text" name="myOutput" placeholder="Enter your string" id="string">
+		<button type="button" onclick="doConvert()"> Convert</button>
+		<input type="reset" name="">
+		<textarea name="myInput" id="demo" cols="50" rows="10"></textarea>
+		<p id="ok"></p>
+	</form>
+	<script language="JavaScript">
+              aHex = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"];
+              strDelimit = "p";
+              var strOut = "";
+              function doConvert() {
+                var which = (document.myForm.myInput.value != "") + ((document.myForm.myOutput.value  != "") << 1);
+                if (which == 1) {
+                  toAscii();
+                } else if (which == 2) {
+                  toHex();
+                } else if (which == 3) {
+                  alert("Please clear the box you want your string converted into.");
+                } else if (which == 0) {
+                  alert("Please enter a string in one of the boxes.");
+                }
+              }
+              function toAscii() {
+                var aInput = document.myForm.myInput.value.split(" ");
+                var strWork = aInput.join("");
+                aInput = strWork.split("\n");
+                strWork = aInput.join("");
+                aInput = strWork.split("%");
+                strWork = aInput.join("");
+                var l = strWork.length/2;
+                var strBuf = "";
+                var nBuf;
+                
+                for (var i=0;i<l;++i) {
+                  strBuf = strWork.substr(i*2, 1);
+                  strBuf += strWork.substr((i*2)+1, 1);
+                  strBuf = "0x"+strBuf;
+                  nBuf = Number(strBuf);
+                  if (nBuf == 0) {
+                    strOut += " ";
+                  } else {
+                    strOut += String.fromCharCode(nBuf);
+                  }
+                }
+                document.myForm.myOutput.value = strOut;
+                // alert(strOut);
+              }
+              function toHex() {
+                var sIn = document.myForm.myOutput.value;
+                var l = sIn.length;
+                var nBuf;
+                var strBuf;
+                var strOut = "";
+                for (var i=0;i<l;++i) {
+                  nBuf = sIn.charCodeAt(i);
+                  strBuf = aHex[Math.floor(nBuf/16)];
+                  strBuf += aHex[nBuf % 16];
+                  // strOut += ("%" + strBuf);
+                  strOut += strBuf;
+                  if (i != 0 && i % 20 == 0) {
+                    strOut += "\n";
+                  }
+                }
+                document.myForm.myInput.value = strOut;
+                 // alert(strOut);
+              }
+            </script>
+</body>
+</html>
